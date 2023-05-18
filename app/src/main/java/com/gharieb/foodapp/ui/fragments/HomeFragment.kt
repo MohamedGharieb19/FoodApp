@@ -2,6 +2,8 @@ package com.gharieb.foodapp.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,7 +35,6 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         return binding.root
 
     }
@@ -41,11 +42,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getRandomMealsToSliderImage()
         getPopularMeals()
         getCategoryMeals()
         onPopularItemClick()
         onCategoryItemClick()
+        underLinedText()
+
+        binding.etSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+
     }
 
     private fun onCategoryItemClick() {
@@ -82,36 +88,11 @@ class HomeFragment : Fragment() {
         homeViewModel.getPopularMealLiveData.observe(viewLifecycleOwner){
             popularAdapter.differ.submitList(it)
         }
-
-
-    }
-
-    private fun getRandomMealsToSliderImage(){
-        homeViewModel.getRandomMeal()
-        homeViewModel.getRandomMealLiveData.observe(viewLifecycleOwner) {data ->
-            if (data != null){
-                Glide.with(this).load(data.strMealThumb).into(binding.imageSlider)
-
-                try {
-                    binding.imageSlider.setOnClickListener {
-                        val intent = Intent(context,MealActivity::class.java)
-                        intent.putExtra("mealId",data.idMeal)
-                        intent.putExtra("mealTitle",data.strMeal)
-                        intent.putExtra("mealThumb",data.strMealThumb)
-                        startActivity(intent)
-                    }
-                }catch (t:Throwable){
-                    Log.d("textApp",t.message.toString())
-                }
-            }
-
-        }
     }
 
     private fun setUpCategoryRecyclerView(){
         categoryAdapter = CategoryAdapter()
         binding.categoriesRecyclerView.apply {
-            layoutManager = GridLayoutManager(context,3,RecyclerView.VERTICAL,false)
             adapter = categoryAdapter
         }
     }
@@ -121,6 +102,12 @@ class HomeFragment : Fragment() {
         binding.popularRecyclerView.apply {
             adapter = popularAdapter
         }
+    }
+
+    private fun underLinedText(){
+        val spannableString = SpannableString(binding.titleTextView.text)
+        spannableString.setSpan(UnderlineSpan(), 0, spannableString.length, 0)
+        binding.titleTextView.text = spannableString
     }
 
 }

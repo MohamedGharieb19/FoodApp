@@ -6,19 +6,20 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.gharieb.foodapp.data.Popular
-import com.gharieb.foodapp.databinding.PopularItemBinding
+import com.gharieb.foodapp.data.Meal
+import com.gharieb.foodapp.databinding.FavoriteItemBinding
+import com.gharieb.foodapp.databinding.SearchItemBinding
 
-class PopularAdapter(): RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
+class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    lateinit var onPopularItemClick: ((Popular) -> Unit)
+    lateinit var onMealItemClick: ((Meal) -> Unit)
 
-    private val diffUtil = object: DiffUtil.ItemCallback<Popular>(){
-        override fun areItemsTheSame(oldItem: Popular, newItem: Popular): Boolean {
+    private val diffUtil = object : DiffUtil.ItemCallback<Meal>() {
+        override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
             return oldItem.idMeal == newItem.idMeal
         }
 
-        override fun areContentsTheSame(oldItem: Popular, newItem: Popular): Boolean {
+        override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean {
             return oldItem == newItem
         }
 
@@ -26,12 +27,12 @@ class PopularAdapter(): RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
 
     val differ = AsyncListDiffer(this,diffUtil)
 
-    class ViewHolder(val binding:PopularItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: SearchItemBinding): RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(PopularItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return ViewHolder(SearchItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun getItemCount(): Int {
@@ -42,12 +43,14 @@ class PopularAdapter(): RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
         val data = differ.currentList[position]
         Glide.with(holder.itemView).load(data.strMealThumb).into(holder.binding.image)
         holder.binding.title.text = data.strMeal
+        holder.binding.area.text = data.strArea
+        holder.binding.category.text = data.strCategory
+        holder.binding.description.text = data.strInstructions
 
 
         holder.itemView.setOnClickListener {
-            onPopularItemClick.invoke(data)
+            onMealItemClick.invoke(data)
         }
 
     }
-
 }

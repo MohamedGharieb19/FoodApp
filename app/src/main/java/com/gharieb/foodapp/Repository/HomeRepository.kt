@@ -68,6 +68,12 @@ class HomeRepository @Inject constructor(
         return response
     }
 
+    suspend fun search(searchQuery: String): Response<MealList>{
+        val response = mealApi.search(searchQuery)
+
+        return response
+    }
+
     suspend fun upsert(meal: Meal){
         dataBase.upsert(meal)
     }

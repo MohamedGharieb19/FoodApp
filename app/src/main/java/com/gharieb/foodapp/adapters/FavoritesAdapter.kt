@@ -9,9 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 import com.gharieb.foodapp.data.Meal
+import com.gharieb.foodapp.data.Popular
 import com.gharieb.foodapp.databinding.FavoriteItemBinding
 
 class FavoritesAdapter(): RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
+
+    lateinit var onMealItemClick: ((Meal) -> Unit)
+
+    lateinit var onIconItemClick: ((Meal) -> Unit)
 
     private val diffUtil = object : DiffUtil.ItemCallback<Meal>() {
         override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
@@ -42,5 +47,16 @@ class FavoritesAdapter(): RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
         val data = differ.currentList[position]
         Glide.with(holder.itemView).load(data.strMealThumb).into(holder.binding.image)
         holder.binding.title.text = data.strMeal
+        holder.binding.area.text = data.strArea
+        holder.binding.category.text = data.strCategory
+        holder.binding.description.text = data.strInstructions
+
+
+        holder.itemView.setOnClickListener {
+            onMealItemClick.invoke(data)
+        }
+        holder.binding.favoriteButton.setOnClickListener {
+            onIconItemClick.invoke(data)
+        }
     }
 }

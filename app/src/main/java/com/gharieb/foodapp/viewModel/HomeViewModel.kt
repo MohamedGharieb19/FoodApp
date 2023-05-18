@@ -34,6 +34,9 @@ class HomeViewModel @Inject constructor(
     private val _getMealMutableLiveData = MutableLiveData<Meal>()
     val getMealLiveData: LiveData<Meal> = _getMealMutableLiveData
 
+    private val _searchMutableLiveData = MutableLiveData<List<Meal>>()
+    val searchMealLiveData: LiveData<List<Meal>> = _searchMutableLiveData
+
 
     fun getRandomMeal(){
         viewModelScope.launch {
@@ -55,7 +58,7 @@ class HomeViewModel @Inject constructor(
     fun getPopularMeals(){
         viewModelScope.launch {
             try {
-                val response = homeRepository.getPopularMeals("Seafood")
+                val response = homeRepository.getPopularMeals("Canadian")
 
                 response.body()!!.meals.let {
                     _getPopularMealMutableLiveData.postValue(it)
@@ -107,6 +110,20 @@ class HomeViewModel @Inject constructor(
                 Log.d("testApp",t.message.toString()+ " Error getmeal")
             }
 
+        }
+    }
+
+    fun search(searchQuery:String){
+        viewModelScope.launch {
+            try {
+                val response = homeRepository.search(searchQuery)
+
+                response.body()!!.meals.let {
+                    _searchMutableLiveData.postValue(it)
+                }
+            }catch (t:Throwable){
+                Log.d("testApp",t.message.toString()+ " Error search")
+            }
         }
     }
 

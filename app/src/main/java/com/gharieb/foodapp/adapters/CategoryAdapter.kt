@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gharieb.foodapp.data.Category
 import com.gharieb.foodapp.databinding.CategoryItemBinding
+import com.gharieb.foodapp.databinding.PopularItemBinding
 
 class CategoryAdapter(): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
@@ -26,12 +27,12 @@ class CategoryAdapter(): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     val differ = AsyncListDiffer(this,diffUtil)
 
-    class ViewHolder(val binding: CategoryItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: PopularItemBinding): RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return ViewHolder(PopularItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun getItemCount(): Int {

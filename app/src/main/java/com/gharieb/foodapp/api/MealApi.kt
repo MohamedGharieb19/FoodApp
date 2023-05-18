@@ -15,7 +15,7 @@ interface MealApi {
 
     @GET("filter.php")
     suspend fun getPopularMeals(
-        @Query("c") categoryName: String
+        @Query("a") categoryName: String
     ): Response<PopularList>
 
     @GET("categories.php")
@@ -30,5 +30,10 @@ interface MealApi {
     suspend fun getDetailCategoryMeals(
         @Query("c") categoryName: String
     ): Response<PopularList>
+
+    @GET("search.php")
+    suspend fun search(
+        @Query("s") searchQuery: String
+    ): Response<MealList>
 
 }

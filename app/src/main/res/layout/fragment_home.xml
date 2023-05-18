@@ -18,58 +18,69 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:fontFamily="serif"
-                android:text="@string/home"
-                android:textSize="24sp"
+                android:fontFamily="sans-serif"
+                android:text="@string/home_title"
+                android:textSize="32sp"
+                android:textColor="#FFBB86FC"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <TextView
+                android:id="@+id/choose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/white"
-                android:contentDescription="Search"
-                android:minHeight="48dp"
-                android:src="@drawable/ic_search"
-                app:layout_constraintBottom_toBottomOf="@id/title_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/title_text_view" />
+                android:textSize="16sp"
+                android:textColor="#8F9090"
+                android:fontFamily="sans-serif"
+                android:text="@string/choose_your_best_food"
+                app:layout_constraintStart_toStartOf="@id/title_text_view"
+                app:layout_constraintEnd_toEndOf="@id/title_text_view"
+                app:layout_constraintTop_toBottomOf="@id/title_text_view"
+                />
 
-            <ImageView
-                android:id="@+id/image_slider"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:src="@mipmap/ic_launcher"
-                android:scaleType="centerCrop"
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:focusable="false"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_edit_text"
+                android:drawableEnd="@drawable/ic_search"
+                android:hint="@string/search"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/choose"
+                />
 
             <TextView
                 android:id="@+id/popular_item_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="popular items"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif"
+                android:text="Popular Meals"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_slider" />
+                app:layout_constraintTop_toBottomOf="@id/etSearch" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popular_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
                 tools:listitem="@layout/popular_item"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/popular_item_text_view"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/popular_item_text_view" />
 
             <TextView
@@ -78,20 +89,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/categories"
                 android:textSize="24sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="@id/popular_item_text_view"
                 app:layout_constraintTop_toBottomOf="@id/popular_recycler_view" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories_recycler_view"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                tools:listitem="@layout/category_item"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                tools:listitem="@layout/popular_item"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/popular_item_text_view"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/categories_item_text_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
